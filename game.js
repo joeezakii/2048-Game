@@ -2,6 +2,11 @@ var board
 var score = 0
 var rows = 4
 var columns = 4
+const pool = [0, 0, 0, 0, 0, 0, 2, 2, 2, 4, 4, 8];
+function getRandomValue() {
+    const randomIndex = Math.floor(Math.random() * pool.length);
+    return pool[randomIndex];
+}
 window.onload = function() {
     setGame();
 }
@@ -13,16 +18,18 @@ function setGame() {
     //     [4, 4, 8, 8]
     //  ]; // a test for the board
 
-    board = [
-    [0,0,0,0],
-    [0,0,0,0],
-    [0,0,0,0],
-     [0,0,0,0],
- ]
+board = []
+for (let r = 0; r < rows; r++) {
+        let row = [];
+        for (let c = 0; c < columns; c++) {
+            row.push(getRandomValue());
+        }
+        board.push(row);
+}
 for(let r = 0; r<rows; r++) {
     for(let c = 0; c < columns; c++) { // filling out the squares in the 2048 grid
         let tile = document.createElement("div")
-        tile.id = r.toString() + "." + c.toString();
+        tile.id = r.toString() + "-" + c.toString();
         let num = board[r][c];
         updateTile(tile,num);
         document.getElementById("board").append(tile)
@@ -66,7 +73,7 @@ function filterZero(row) {
 function slide(row) {
 row = filterZero(row)
 // sliding process
- for(let i = 0; i < row.length()-1; i++) {
+ for(let i = 0; i < row.length-1; i++) {
             if (row[i] == row[i+1]) {
             row[i] *= 2; //merging the squares together
             row[i+1] = 0;
