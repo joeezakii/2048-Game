@@ -37,19 +37,19 @@ body {
     color: black;
 }
 .x4 {
-    background-color: rgb(238, 209, 82);
+    background-color: rgb(235, 217, 137);
     color: gray;
 }
 .x8 {
-    background-color: rgb(226, 186, 5);
+    background-color: rgb(193, 226, 5);
     color: white;
 }
 .x16 {
-    background-color: rgb(219, 135, 10);
+    background-color: rgb(226, 188, 18);
     color: white;
 }
 .x32 {
-    background-color: rgb(207, 88, 9);
+    background-color: rgb(168, 131, 8);
     color: white;
 }
 .x64 {
@@ -57,46 +57,32 @@ body {
     color: white;
 }
 .x128 {
-    background-color: rgb(214, 63, 4);
-    color: white;
+    background-color: rgb(219, 92, 6);
+    color: gray;
 }
 .x256{
-    background-color: rgb(214, 37, 6);
+    background-color: rgb(192, 63, 12) ;
     color: white;
 }
 .x512{
-    background-color: rgb(228, 24, 9);
-    color: white;
+    background-color: rgb(202, 54, 9);
+    color: gray;
 }
 .x1024{
-    background-color: rgb(194, 13, 13);
+    background-color: rgb(221, 24, 24);
     color: white;
 }
 .x2048 {
-    background-color: rgb(177, 8, 8);
-    color: white;
+    background-color: rgb(172, 19, 19);
+    color: gray;
 }
 .x4096 {
-    background-color: rgb(129, 6, 6);
+    background-color: rgb(100, 5, 5);
     color: white;
 }
 .x8192 {
-    background-color: rgb(75, 5, 5);
-    color: white;
-}
-.x16384 {
-    background-color: rgb(44, 3, 3);
-    color: white;
-}
-.x32768 {
-    background-color: rgb(53, 2, 2);
-    color: white;
-}
-.x65536 {
-    background-color: rgb(39, 2, 2);
-    color: white;
-}
-.x131072{
     background-color: rgb(0, 0, 0);
     color: white;
 }
+
+
