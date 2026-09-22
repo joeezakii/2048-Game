@@ -80,7 +80,7 @@ row = filterZero(row)
             score += row[i]; //updating the score
         }
         } // [2,2,2,0] => [4,0,2,0 (ignore this)]
-        row.filterZero(row)
+        row = filterZero(row)
     //add zeros back
     while (row.length < columns) row.push(0);
     //[4, 2, 0, 0]
