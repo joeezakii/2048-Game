@@ -3,6 +3,18 @@ var score = 0
 var rows = 4
 var columns = 4
 const pool = [0, 0, 0, 0, 0, 0, 2, 2, 2, 4, 4, 8];
+
+var startX = 0;
+var startY = 0;
+var endX = 0;
+var endY = 0;
+var isMouseDown = false;
+
+
+
+
+
+
 function getRandomValue() {
     const randomIndex = Math.floor(Math.random() * pool.length);
     return pool[randomIndex];
@@ -67,6 +79,60 @@ if(e.code == 'ArrowDown') {
 }
 document.getElementById("score").innerText = score;
 })
+
+
+document.addEventListener('mousedown', (e) => {
+    isMouseDown = true;
+    startX = e.clientX;
+    startY = e.clientY;
+});
+
+document.addEventListener('mouseup', (e) => {
+    if (!isMouseDown) return;
+    isMouseDown = false;
+
+    endX = e.clientX;
+    endY = e.clientY;
+
+    let diffX = endX - startX;
+    let diffY = endY - startY;
+
+    
+    let minDistance = 30;
+
+    let moved = false;
+
+    
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (Math.abs(diffX) > minDistance) {
+            if (diffX > 0) {
+                slideRight();
+            } else {
+                slideLeft();
+            }
+            moved = true;
+        }
+    } else {
+        // Vertical movement
+        if (Math.abs(diffY) > minDistance) {
+            if (diffY > 0) {
+                slideDown();
+            } else {
+                slideUp();
+            }
+            moved = true;
+        }
+    }
+
+    if (moved) {
+        setTwo();
+        document.getElementById("score").innerText = score;
+    }
+});
+
+
+
+
 function filterZero(row) {
     return row.filter(num => num != 0) // creates a different array that removes the zero and the number will replace the position of that zero
 }
@@ -78,6 +144,7 @@ row = filterZero(row)
             row[i] *= 2; //merging the squares together
             row[i+1] = 0;
             score += row[i]; //updating the score
+            i++; // skip next merged tile
         }
         } // [2,2,2,0] => [4,0,2,0 (ignore this)]
         row = filterZero(row)
