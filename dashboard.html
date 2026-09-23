@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboard.css">
+    <title>2048 - Player Dashboard</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="card profile-bar">
+            <div class="user-info">
+                <div class="avatar">🎮</div>
+                <div>
+                    <h2>Player Profile</h2>
+                    <p>🔥 Current Streak: <b>5 Days</b></p>
+                </div>
+            </div>
+            <div class="quick-actions">
+                <button class="btn btn-primary" onclick="location.href='game.html'">🎮 New Game</button>
+                <button class="btn btn-outline" onclick="location.href='index.html'">Logout</button>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="card stat-card">
+                <span>🏆 BEST SCORE</span>
+                <h3>16,420</h3>
+            </div>
+            <div class="card stat-card">
+                <span>🔢 HIGHEST TILE</span>
+                <h3 class="gold-text">2048</h3>
+            </div>
+            <div class="card stat-card">
+                <span>📊 GAMES PLAYED</span>
+                <h3>128</h3>
+            </div>
+            <div class="card stat-card">
+                <span>🎯 WIN RATE</span>
+                <h3>68%</h3>
+            </div>
+        </section>
+
+        <section class="middle-grid">
+            <div class="card game-preview-card">
+                <div class="card-header">
+                    <h3>🎮 Current Game</h3>
+                    <span class="score-badge">Score: 1,024</span>
+                </div>
+                <div class="mini-grid">
+                    <div class="tile t-2">2</div><div class="tile t-4">4</div><div class="tile t-8">8</div><div class="tile t-16">16</div>
+                    <div class="tile t-32">32</div><div class="tile t-64">64</div><div class="tile t-128">128</div><div class="tile t-256">256</div>
+                    <div class="tile t-512">512</div><div class="tile t-1024">1024</div><div class="tile empty"></div><div class="tile empty"></div>
+                    <div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div>
+                </div>
+                <button class="btn btn-primary w-full" style="margin-top: 1rem;" onclick="location.href='game.html'">Continue Game</button>
+            </div>
+
+            <div class="card progress-card">
+                <div class="card-header">
+                    <h3>📊 Gameplay Details</h3>
+                </div>
+                <div class="sub-stats">
+                    <p><span>Games Won / Lost:</span> <b>87 W / 41 L</b></p>
+                    <p><span>Average Duration:</span> <b>6m 45s</b></p>
+                    <p><span>Most Reached Tile:</span> <b class="gold-text">1024</b></p>
+                    <p><span>Total Playing Time:</span> <b>14h 20m</b></p>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
