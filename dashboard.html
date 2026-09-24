@@ -5,39 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="dashboard.css">
     <title>2048 - Player Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
     <div class="dashboard-container">
         <header class="card profile-bar">
             <div class="user-info">
-                <div class="avatar">🎮</div>
+                <div class="avatar" id="profile-avatar">🎮</div>
                 <div>
-                    <h2>Player Profile</h2>
-                    <p>🔥 Current Streak: <b>5 Days</b></p>
+                    <h2 id="profile-name">Player Profile</h2>
+                    <p>🔥 Current Streak: <b id="profile-streak">—</b></p>
                 </div>
             </div>
             <div class="quick-actions">
                 <button class="btn btn-primary" onclick="location.href='game.html'">🎮 New Game</button>
-                <button class="btn btn-outline" onclick="location.href='index.html'">Logout</button>
+                <button class="btn btn-outline" id="logout-btn">Logout</button>
             </div>
         </header>
+
+        <!-- Simple banner for errors / empty states. Hidden unless needed. -->
+        <div id="dashboard-message" class="card" style="display:none; padding:1rem; margin-bottom:1rem;"></div>
 
         <section class="stats-grid">
             <div class="card stat-card">
                 <span>🏆 BEST SCORE</span>
-                <h3>16,420</h3>
+                <h3 id="stat-best-score">—</h3>
             </div>
             <div class="card stat-card">
                 <span>🔢 HIGHEST TILE</span>
-                <h3 class="gold-text">2048</h3>
+                <h3 class="gold-text" id="stat-highest-tile">—</h3>
             </div>
             <div class="card stat-card">
                 <span>📊 GAMES PLAYED</span>
-                <h3>128</h3>
+                <h3 id="stat-games-played">—</h3>
             </div>
             <div class="card stat-card">
                 <span>🎯 WIN RATE</span>
-                <h3>68%</h3>
+                <h3 id="stat-win-rate">—</h3>
             </div>
         </section>
 
@@ -45,15 +49,15 @@
             <div class="card game-preview-card">
                 <div class="card-header">
                     <h3>🎮 Current Game</h3>
-                    <span class="score-badge">Score: 1,024</span>
+                    <span class="score-badge" id="current-game-score">Score: —</span>
                 </div>
-                <div class="mini-grid">
-                    <div class="tile t-2">2</div><div class="tile t-4">4</div><div class="tile t-8">8</div><div class="tile t-16">16</div>
-                    <div class="tile t-32">32</div><div class="tile t-64">64</div><div class="tile t-128">128</div><div class="tile t-256">256</div>
-                    <div class="tile t-512">512</div><div class="tile t-1024">1024</div><div class="tile empty"></div><div class="tile empty"></div>
+                <div class="mini-grid" id="current-game-grid">
+                    <div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div>
+                    <div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div>
+                    <div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div>
                     <div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div><div class="tile empty"></div>
                 </div>
-                <button class="btn btn-primary w-full" style="margin-top: 1rem;" onclick="location.href='game.html'">Continue Game</button>
+                <button class="btn btn-primary w-full" style="margin-top: 1rem;" id="current-game-btn" onclick="location.href='game.html'">New Game</button>
             </div>
 
             <div class="card progress-card">
@@ -61,13 +65,15 @@
                     <h3>📊 Gameplay Details</h3>
                 </div>
                 <div class="sub-stats">
-                    <p><span>Games Won / Lost:</span> <b>87 W / 41 L</b></p>
-                    <p><span>Average Duration:</span> <b>6m 45s</b></p>
-                    <p><span>Most Reached Tile:</span> <b class="gold-text">1024</b></p>
-                    <p><span>Total Playing Time:</span> <b>14h 20m</b></p>
+                    <p><span>Games Won / Lost:</span> <b id="stat-won-lost">—</b></p>
+                    <p><span>Average Duration:</span> <b id="stat-avg-duration">—</b></p>
+                    <p><span>Most Reached Tile:</span> <b class="gold-text" id="stat-most-tile">—</b></p>
+                    <p><span>Total Playing Time:</span> <b id="stat-total-time">—</b></p>
                 </div>
             </div>
         </section>
     </div>
+
+    <script src="js/dashboard.js"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard - 2048 Game</title>
     <link rel="stylesheet" href="leader.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 </head>
 <body>
 
@@ -14,7 +15,15 @@
             <button class="btn btn-outline" onclick="location.href='dashboard.html'">⬅ Back to Dashboard</button>
         </header>
 
-        <table>
+        <!-- Loading / error / empty state banner. Hidden unless needed. -->
+        <div id="leaderboard-message" style="display:none; padding:1rem;"></div>
+
+        <!-- Minimal, non-redesigning highlight for the current user's row. -->
+        <style>
+            tr.current-user-row { outline: 2px solid currentColor; outline-offset: -2px; }
+        </style>
+
+        <table id="leaderboard-table">
             <thead>
                 <tr>
                     <th>RANK</th>
@@ -25,101 +34,12 @@
                     <th>POINTS</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr class="top-rank">
-                    <td><span class="rank-badge rank-1">1</span></td>
-                    <td>
-                        <div class="intern">
-                            <div class="avatar">🥇</div>
-                            <span class="intern-name">Sara Yasser</span>
-                        </div>
-                    </td>
-                    <td><span class="track-tag">Web Dev</span></td>
-                    <td>🇪🇬 Egypt</td>
-                    <td><span class="move up">▲ +2</span></td>
-                    <td class="points-text">16,420</td>
-                </tr>
-                <tr class="top-rank">
-                    <td><span class="rank-badge rank-2">2</span></td>
-                    <td>
-                        <div class="intern">
-                            <div class="avatar">🥈</div>
-                            <span class="intern-name">Omar Ali</span>
-                        </div>
-                    </td>
-                    <td><span class="track-tag">AI & ML</span></td>
-                    <td>🇪🇬 Egypt</td>
-                    <td><span class="move same">▬ 0</span></td>
-                    <td class="points-text">14,210</td>
-                </tr>
-                <tr class="top-rank">
-                    <td><span class="rank-badge rank-3">3</span></td>
-                    <td>
-                        <div class="intern">
-                            <div class="avatar">🥉</div>
-                            <span class="intern-name">Nour Ahmed</span>
-                        </div>
-                    </td>
-                    <td><span class="track-tag">UI/UX</span></td>
-                    <td>🇸🇦 KSA</td>
-                    <td><span class="move down">▼ -1</span></td>
-                    <td class="points-text">12,850</td>
-                </tr>
-                <tr>
-                    <td><span class="rank-badge">4</span></td>
-                    <td>
-                        <div class="intern">
-                            <div class="avatar">👤</div>
-                            <span class="intern-name">Karim Hassan</span>
-                        </div>
-                    </td>
-                    <td><span class="track-tag">Cyber Security</span></td>
-                    <td>🇪🇬 Egypt</td>
-                    <td><span class="move up">▲ +3</span></td>
-                    <td class="points-text">10,400</td>
-                </tr>
-                <tr>
-                    <td><span class="rank-badge">5</span></td>
-                    <td>
-                        <div class="intern">
-                            <div class="avatar">👤</div>
-                            <span class="intern-name">Mariam Khaled</span>
-                        </div>
-                    </td>
-                    <td><span class="track-tag">Web Dev</span></td>
-                    <td>🇦🇪 UAE</td>
-                    <td><span class="move down">▼ -2</span></td>
-                    <td class="points-text">9,120</td>
-                </tr>
-                <tr>
-                    <td><span class="rank-badge">6</span></td>
-                    <td>
-                        <div class="intern">
-                            <div class="avatar">👤</div>
-                            <span class="intern-name">Youssef Mahmoud</span>
-                        </div>
-                    </td>
-                    <td><span class="track-tag">Data Science</span></td>
-                    <td>🇪🇬 Egypt</td>
-                    <td><span class="move same">▬ 0</span></td>
-                    <td class="points-text">8,650</td>
-                </tr>
-                <tr>
-                    <td><span class="rank-badge">7</span></td>
-                    <td>
-                        <div class="intern">
-                            <div class="avatar">👤</div>
-                            <span class="intern-name">Hana Mostafa</span>
-                        </div>
-                    </td>
-                    <td><span class="track-tag">Embedded Systems</span></td>
-                    <td>🇪🇬 Egypt</td>
-                    <td><span class="move up">▲ +1</span></td>
-                    <td class="points-text">7,980</td>
-                </tr>
+            <tbody id="leaderboard-body">
+                <!-- Rows are rendered from public.leaderboard by JS below. -->
             </tbody>
         </table>
     </div>
 
+    <script src="js/leader.js"></script>
 </body>
 </html>
