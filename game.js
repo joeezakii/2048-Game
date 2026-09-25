@@ -186,7 +186,7 @@ row = filterZero(row)
 }
 function slideLeft() {
     for(let r = 0; r < rows; r++) {
-        let row = board[r];
+        let row = board[r].slice();
         row = slide(row);
         board[r] = row
         for (let c = 0; c < columns; c++) {
@@ -198,9 +198,8 @@ function slideLeft() {
 }
 function slideRight() {
     for (let r = 0; r < rows; r++) {
-        let row = board[r];         //[0, 2, 2, 2]
-        row.reverse();              //[2, 2, 2, 0]
-        row = slide(row)            //[4, 2, 0, 0]
+        let row = board[r].slice().reverse(); //[0, 2, 2, 2] -> //[2, 2, 2, 0]
+        row = slide(row)  //[4, 2, 0, 0]                     
         board[r] = row.reverse();   //[0, 0, 2, 4];
         for (let c = 0; c < columns; c++){
             let tile = document.getElementById(r.toString() + "-" + c.toString());
@@ -230,7 +229,7 @@ function slideUp() {
 function slideDown() {
     for (let c = 0; c < columns; c++) {
         let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
-        row.reverse();
+        row = row.reverse(); 
         row = slide(row);
         row.reverse();
         // board[0][c] = row[0];
