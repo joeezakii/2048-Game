@@ -2,7 +2,7 @@ var board
 var score = 0
 var rows = 4
 var columns = 4
-const pool = [0, 0, 0, 0, 0, 0, 2, 2, 2, 4, 4, 8];
+
 
 var startX = 0;
 var startY = 0;
@@ -11,11 +11,6 @@ var endY = 0;
 var isMouseDown = false;
 var isPaused = false;
 
-
-function getRandomValue() {
-    const randomIndex = Math.floor(Math.random() * pool.length);
-    return pool[randomIndex];
-}
 window.onload = function() {
     setGame();
 }
@@ -27,18 +22,16 @@ function setGame() {
     //     [4, 4, 8, 8]
     //  ]; // a test for the board
 
-board = []
+board = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ];
 score = 0;
 let boardElement = document.getElementById("board");
 if (boardElement) boardElement.innerHTML = "";
 
-for (let r = 0; r < rows; r++) {
-        let row = [];
-        for (let c = 0; c < columns; c++) {
-            row.push(getRandomValue());
-        }
-        board.push(row);
-}
 for(let r = 0; r<rows; r++) {
     for(let c = 0; c < columns; c++) { // filling out the squares in the 2048 grid
         let tile = document.createElement("div")
@@ -105,22 +98,14 @@ document.addEventListener('keyup', (e) => {
 
     if (isPaused) return;
     let prevBoard = JSON.parse(JSON.stringify(board));
-if(e.code == 'ArrowLeft') {
-    slideLeft();
-    setTwo();
-}
-if(e.code == 'ArrowRight') {
-    slideRight();
-    setTwo();
-}
-if(e.code == 'ArrowUp') {
-    slideUp();
-    setTwo();
-}
-if(e.code == 'ArrowDown') {
-    slideDown();
-    setTwo();
-}
+
+if(e.code == 'ArrowLeft') slideLeft();
+
+if(e.code == 'ArrowRight') slideRight();
+
+if(e.code == 'ArrowUp') slideUp();
+
+if(e.code == 'ArrowDown') slideDown();
 if (!boardsAreEqual(prevBoard, board)) {
         setTwo();
         let scoreElem = document.getElementById("score");
@@ -262,19 +247,20 @@ function slideDown() {
 }
 
 function setTwo() {
-    if (!hasEmptyTile()) {
-        return; // stop the program
-    }
+    if (!hasEmptyTile()) return;
+    
     let found = false;
     while (!found) {
-        //find random row and column to place a 2 in
         let r = Math.floor(Math.random() * rows);
         let c = Math.floor(Math.random() * columns);
         if (board[r][c] == 0) {
-            board[r][c] = 2;
+            // Standard rule: 90% chance for 2, 10% chance for 4
+            let value = Math.random() < 0.9 ? 2 : 4;
+            board[r][c] = value;
+            
             let tile = document.getElementById(r.toString() + "-" + c.toString());
-            tile.innerText = "2";
-            tile.classList.add("x2");
+            // Safe CSS application: delegates styling to updateTile
+            updateTile(tile, value);
             found = true;
         }
     }
