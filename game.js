@@ -9,10 +9,7 @@ var startY = 0;
 var endX = 0;
 var endY = 0;
 var isMouseDown = false;
-
-
-
-
+var isPaused = false;
 
 
 function getRandomValue() {
@@ -31,6 +28,10 @@ function setGame() {
     //  ]; // a test for the board
 
 board = []
+score = 0;
+let boardElement = document.getElementById("board");
+if (boardElement) boardElement.innerHTML = "";
+
 for (let r = 0; r < rows; r++) {
         let row = [];
         for (let c = 0; c < columns; c++) {
@@ -49,6 +50,8 @@ for(let r = 0; r<rows; r++) {
 }
 setTwo();
 setTwo();
+let scoreElem = document.getElementById("score");
+if (scoreElem) scoreElem.innerText = score;
 }
 function updateTile(tile, num) {
     tile.innerText = "";
@@ -60,7 +63,48 @@ function updateTile(tile, num) {
             else tile.classList.add("x8192")
     }
 }
+
+function pauseGame() {
+    isPaused = true;
+    let menu = document.getElementById("pause-menu");
+    if (menu) menu.style.display = "flex";
+}
+
+
+function continueGame() {
+    isPaused = false;
+    let menu = document.getElementById("pause-menu");
+    if (menu) menu.style.display = "none";
+}
+
+
+function endGame() {
+    isPaused = false;
+    let menu = document.getElementById("pause-menu");
+    if (menu) menu.style.display = "none";
+    // Displays final score popup to user
+    alert("Game Over! Your Final Score is: " + score);
+    // Resets the board for a fresh game
+    setGame();
+}
+
+function boardsAreEqual(boardA, boardB) {
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns; c++) {
+            if (boardA[r][c] !== boardB[r][c]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+
 document.addEventListener('keyup', (e) => {
+
+    if (isPaused) return;
+    let prevBoard = JSON.parse(JSON.stringify(board));
 if(e.code == 'ArrowLeft') {
     slideLeft();
     setTwo();
@@ -77,18 +121,24 @@ if(e.code == 'ArrowDown') {
     slideDown();
     setTwo();
 }
-document.getElementById("score").innerText = score;
+if (!boardsAreEqual(prevBoard, board)) {
+        setTwo();
+        let scoreElem = document.getElementById("score");
+        if (scoreElem) scoreElem.innerText = score;
+        checkGameOver();
+    }
 })
 
 
 document.addEventListener('mousedown', (e) => {
+    if(isPaused) return;
     isMouseDown = true;
     startX = e.clientX;
     startY = e.clientY;
 });
 
 document.addEventListener('mouseup', (e) => {
-    if (!isMouseDown) return;
+    if (isPaused || !isMouseDown) return;
     isMouseDown = false;
 
     endX = e.clientX;
@@ -99,18 +149,15 @@ document.addEventListener('mouseup', (e) => {
 
     
     let minDistance = 30;
+    let prevBoard = JSON.parse(JSON.stringify(board));
 
-    let moved = false;
-
-    
-    if (Math.abs(diffX) > Math.abs(diffY)) {
+    if (Math.abs(diffX) > Math.abs(diffY)) { //Horizontal Movement
         if (Math.abs(diffX) > minDistance) {
             if (diffX > 0) {
                 slideRight();
             } else {
                 slideLeft();
             }
-            moved = true;
         }
     } else {
         // Vertical movement
@@ -120,18 +167,16 @@ document.addEventListener('mouseup', (e) => {
             } else {
                 slideUp();
             }
-            moved = true;
+            
         }
     }
-
-    if (moved) {
+    if (!boardsAreEqual(prevBoard, board)) {
         setTwo();
-        document.getElementById("score").innerText = score;
+        let scoreElem = document.getElementById("score");
+        if (scoreElem) scoreElem.innerText = score;
+        checkGameOver();
     }
 });
-
-
-
 
 function filterZero(row) {
     return row.filter(num => num != 0) // creates a different array that removes the zero and the number will replace the position of that zero
@@ -245,4 +290,27 @@ function hasEmptyTile() {
         }
     }
     return false;
+}
+
+function hasTileMatch() {
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns; c++) {
+            if (c < columns - 1 && board[r][c] === board[r][c + 1]) {
+                return true;
+            }
+            if (r < rows - 1 && board[r][c] === board[r + 1][c]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function checkGameOver() {
+    if (!hasEmptyTile() && !hasTileMatch()) {
+        setTimeout(() => {
+            alert("Game Over! No available moves left. Final Score: " + score);
+            setGame();
+        }, 100);
+    }
 }
